@@ -1,10 +1,9 @@
 import React from 'react';
 
 function Incident() {
-    return(
-    <div>DeliveryRequest</div>
-)
-;
+    return (
+        <div>Incident</div>
+    );
 }
 
 export default Incident;
