@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import { userReducer } from "./slices/user";
+import { ticketReducer } from "./slices/ticket";
 
 // import counterReducer from "../features/counter/counterSlice";
 
@@ -8,6 +9,7 @@ export function makeStore() {
   return configureStore({
     reducer: {
       user: userReducer,
+      ticket: ticketReducer,
     },
   });
 }

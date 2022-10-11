@@ -28,10 +28,11 @@ import axios from "axios";
 import { useAppSelector } from "../../redux/hooks";
 import { selectUserData } from "../../redux/slices/user";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const navigation = [
   { name: "Главная", href: "/", icon: HomeIcon, current: true },
-  { name: "История", href: "/history", icon: InboxIcon, current: false },
+  { name: "Тикеты", href: "/tickets", icon: InboxIcon, current: false },
   { name: "Балансы", href: "/balances", icon: ScaleIcon, current: false },
   { name: "Карты", href: "/cards", icon: CreditCardIcon, current: false },
   { name: "Клиенты", href: "/clients", icon: UserGroupIcon, current: false },
@@ -45,7 +46,6 @@ const navigation = [
 const secondaryNavigation = [
   { name: "Настройки", href: "/settings", icon: CogIcon },
   { name: "Помощь", href: "/help", icon: QuestionMarkCircleIcon },
-  { name: "Приватность", href: "/privacy", icon: ShieldCheckIcon },
 ];
 const cards = [
   { name: "Account balance", href: "#", icon: ScaleIcon, amount: "$30,659.45" },
@@ -75,6 +75,8 @@ function classNames(...classes) {
 }
 
 export default function MainLayout({ children }) {
+  const router = useRouter();
+  console.log(router.asPath);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const userData = useAppSelector(selectUserData);
   return (
@@ -156,39 +158,44 @@ export default function MainLayout({ children }) {
                 >
                   <div className="px-2 space-y-1">
                     {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-pink-800 text-white"
-                            : "text-white hover:text-white hover:bg-pink-800",
-                          "group flex items-center px-2 py-2 text-base font-medium rounded-md"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        <item.icon
-                          className="mr-4 flex-shrink-0 h-6 w-6 text-white"
-                          aria-hidden="true"
-                        />
-                        {item.name}
-                      </a>
+                      <Link href={item.href} key={item.name}>
+                        <a
+                          className={classNames(
+                            router.asPath === item.href
+                              ? "bg-pink-800 text-white"
+                              : "text-white hover:text-white hover:bg-pink-800",
+                            "group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                          )}
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          <item.icon
+                            className="mr-4 flex-shrink-0 h-6 w-6 text-white"
+                            aria-hidden="true"
+                          />
+                          {item.name}
+                        </a>
+                      </Link>
                     ))}
                   </div>
                   <div className="mt-6 pt-6">
                     <div className="px-2 space-y-1">
                       {secondaryNavigation.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-white hover:text-white hover:bg-pink-800"
-                        >
-                          <item.icon
-                            className="mr-4 h-6 w-6 text-white"
-                            aria-hidden="true"
-                          />
-                          {item.name}
-                        </a>
+                        <Link href={item.href} key={item.name}>
+                          <a
+                            className={classNames(
+                              router.asPath === item.href
+                                ? "bg-pink-800 text-white"
+                                : "text-white hover:text-white hover:bg-pink-800",
+                              "group flex items-center px-2 py-2 text-base font-medium rounded-md text-white hover:text-white hover:bg-pink-800"
+                            )}
+                          >
+                            <item.icon
+                              className="mr-4 h-6 w-6 text-white"
+                              aria-hidden="true"
+                            />
+                            {item.name}
+                          </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -227,7 +234,7 @@ export default function MainLayout({ children }) {
                     <a
                       href={item.href}
                       className={classNames(
-                        item.current
+                        router.asPath === item.href
                           ? "bg-pink-800 text-white"
                           : "text-white hover:text-white hover:bg-pink-800",
                         "group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md"
@@ -247,7 +254,14 @@ export default function MainLayout({ children }) {
                 <div className="px-2 space-y-1">
                   {secondaryNavigation.map((item) => (
                     <Link href={item.href} key={item.name}>
-                      <a className="group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-white hover:text-white hover:bg-pink-800">
+                      <a
+                        className={classNames(
+                          router.asPath === item.href
+                            ? "bg-pink-800 text-white"
+                            : "text-white hover:text-white hover:bg-pink-800",
+                          "group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md text-white hover:text-white hover:bg-pink-800"
+                        )}
+                      >
                         <item.icon
                           className="mr-4 h-6 w-6 text-white"
                           aria-hidden="true"

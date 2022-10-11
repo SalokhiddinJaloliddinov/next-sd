@@ -13,16 +13,15 @@ App.getInitialProps = wrapper.getInitialAppProps(
   (store) =>
     async ({ ctx, Component }) => {
       try {
-        const { sd_token } = parseCookies(ctx);
-        const userData = await Api(ctx).user.getMe(sd_token);
+        const userData = await Api(ctx).user.getMe();
 
         store.dispatch(setUserData(userData));
       } catch (err) {
         if (ctx.asPath === "/") {
-          ctx.res.writeHead(302, {
+          ctx.res?.writeHead(302, {
             Location: "/login",
           });
-          ctx.res.end();
+          ctx.res?.end();
         }
         console.log(err);
       }

@@ -6,7 +6,6 @@ import { CreateTicketDto } from "../../utils/api/types";
 import { Api } from "../../utils/api";
 import { useAppSelector } from "../../redux/hooks";
 import { selectUserData } from "../../redux/slices/user";
-import { parseCookies } from "nookies";
 import { Meta } from "../../components/Meta";
 
 interface MyComponentProps {}
@@ -19,8 +18,6 @@ const CreateTicketPage: NextPage = () => {
   const onSubmit = async (dto: CreateTicketDto) => {
     try {
       const data = await Api().ticket.create(dto);
-      console.log(data);
-      console.log(Object.values(data.objects)[0].key);
     } catch (err) {
       console.warn("Register error", err);
       if (err.response) {

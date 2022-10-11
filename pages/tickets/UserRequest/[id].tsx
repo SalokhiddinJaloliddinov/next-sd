@@ -1,16 +1,15 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 import { Api } from "../../../utils/api";
-import { useRouter } from "next/router";
 
-function Incident({ ticketData }) {
+function UserRequest({ ticketData }) {
   return <div>{JSON.stringify(ticketData)}</div>;
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const { id } = ctx.params;
-    const ticketData = await Api(ctx).ticket.getOneIncident(id);
+    const ticketData = await Api(ctx).ticket.getOneRequest(id);
     if (!ticketData) {
       return {
         props: {},
@@ -33,4 +32,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 };
 
-export default Incident;
+export default UserRequest;

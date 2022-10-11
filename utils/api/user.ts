@@ -13,12 +13,8 @@ export const UserApi = (instance: AxiosInstance) => ({
     );
     return data;
   },
-  async getMe(token: string) {
-    const { data } = await instance.get<ResponseLogin>("/auth/profile", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  async getMe() {
+    const { data } = await instance.get<ResponseLogin>("/auth/profile");
     return data;
   },
 });

@@ -12,12 +12,13 @@ import { Api } from "../../utils/api";
 import { setCookie } from "nookies";
 import { selectUserData, setUserData } from "../../redux/slices/user";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
 
 function LoginPage() {
   const router = useRouter();
   const userData = useAppSelector(selectUserData);
   const dispatch = useAppDispatch();
-  const form = useForm<FormValues>({
+  const form = useForm({
     mode: "onChange",
   });
   const onSubmit = async (dto: LoginDto) => {
@@ -140,5 +141,11 @@ function LoginPage() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  return {
+    props: {},
+  };
+};
 
 export default LoginPage;
