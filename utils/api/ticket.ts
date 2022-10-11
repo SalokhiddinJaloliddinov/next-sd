@@ -15,7 +15,7 @@ export const TicketApi = (instance: AxiosInstance) => ({
 
   async getAll(filter: filter) {
     const { data } = await instance.get(
-      `/ticket/user-request?page=${filter.page ? filter.page : ""}&limit=${
+      `/ticket/incident?page=${filter.page ? filter.page : ""}&limit=${
         filter.limit ? filter.limit : ""
       }&search=${filter.search ? filter.search : ""}`
     );

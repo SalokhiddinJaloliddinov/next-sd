@@ -20,6 +20,7 @@ import { selectUserData, setUserData } from "../redux/slices/user";
 import { wrapper } from "../redux/store";
 import { parseCookies } from "nookies";
 import { Api } from "../utils/api";
+import SimpleNotification from "../components/Notification/simple";
 
 const stats = [
   {

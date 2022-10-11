@@ -6,6 +6,7 @@ import { TicketList } from "../../utils/api/types";
 import { TicketList as List } from "../../components/TicketList";
 import Heading from "../../components/Heading";
 import { Meta } from "../../components/Meta";
+import SimpleNotification from "../../components/Notification/simple";
 
 interface TicketsProps {
   allTickets: { items: TicketList[]; total: string };
@@ -27,6 +28,7 @@ const Tickets: React.FC<TicketsProps> = (props) => {
         <Heading name={"Все Тикеты"} tools={tabs} />
         <List data={props.allTickets} />
       </div>
+      <SimpleNotification total={props.allTickets.total} />
     </MainLayout>
   );
 };

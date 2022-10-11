@@ -75,8 +75,9 @@ const Heading: React.FC<HeadingProps> = ({ name, tools }) => {
         </div>
         <div className="hidden sm:block">
           <nav className="-mb-px flex space-x-8">
-            {tools.map((tab) => (
+            {tools.map((tab, index) => (
               <a
+                onClick={() => alert(index)}
                 key={tab.name}
                 href={tab.href}
                 className={classNames(
