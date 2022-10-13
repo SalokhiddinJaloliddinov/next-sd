@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { CreateTicketDto } from "./types";
+import { CreatePublicLogDto, CreateTicketDto, SingleTicket } from "./types";
 
 interface filter {
   search: string;
@@ -9,7 +9,7 @@ interface filter {
 
 export const TicketApi = (instance: AxiosInstance) => ({
   async create(dto: CreateTicketDto) {
-    const { data } = await instance.post<CreateTicketDto>("/ticket", dto, {});
+    const { data } = await instance.post("/ticket", dto, {});
     return data;
   },
 
@@ -22,16 +22,22 @@ export const TicketApi = (instance: AxiosInstance) => ({
     return data;
   },
 
-  async getOneDelivery(id: number) {
-    const { data } = await instance.get(`/ticket/delivery-request/${id}`);
+  async getOne(id: number, finalclass: string) {
+    const { data } = await instance.get<SingleTicket>(
+      `/ticket/${finalclass}/${id}`
+    );
     return data;
   },
-  async getOneIncident(id: number) {
-    const { data } = await instance.get(`/ticket/incident/${id}`);
+
+  async getPublicLog(id: number, finalclass: string) {
+    const { data } = await instance.get(
+      `ticket/${finalclass}/${id}/public-log`
+    );
     return data;
   },
-  async getOneRequest(id: number) {
-    const { data } = await instance.get(`/ticket/user-request/${id}`);
+
+  async createPublicLog(dto: CreatePublicLogDto) {
+    const { data } = await instance.post("/ticket/public-log", dto);
     return data;
   },
 });

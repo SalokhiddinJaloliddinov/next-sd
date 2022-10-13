@@ -7,16 +7,20 @@ import { TicketList as List } from "../../components/TicketList";
 import Heading from "../../components/Heading";
 import { Meta } from "../../components/Meta";
 import SimpleNotification from "../../components/Notification/simple";
+import {
+  CheckCircleIcon,
+  ClockIcon,
+  DocumentSearchIcon,
+} from "@heroicons/react/outline";
 
 interface TicketsProps {
   allTickets: { items: TicketList[]; total: string };
 }
 
 const tabs = [
-  { name: "Открытые", href: "#", current: false },
-  { name: "В работе", href: "#", current: false },
-  { name: "Решённые", href: "#", current: true },
-  { name: "Закрытые", href: "#", current: false },
+  { name: "Открытые", href: "#", current: true, icon: DocumentSearchIcon },
+  { name: "В работе", href: "#", current: false, icon: ClockIcon },
+  { name: "Решённые", href: "#", current: false, icon: CheckCircleIcon },
 ];
 
 const Tickets: React.FC<TicketsProps> = (props) => {
@@ -24,7 +28,7 @@ const Tickets: React.FC<TicketsProps> = (props) => {
   return (
     <MainLayout>
       <Meta title={"Все Тикеты"} description={"Все Тикеты"} />
-      <div className={"px-6 mt-4"}>
+      <div className={"px-12 mt-4"}>
         <Heading name={"Все Тикеты"} tools={tabs} />
         <List data={props.allTickets} />
       </div>

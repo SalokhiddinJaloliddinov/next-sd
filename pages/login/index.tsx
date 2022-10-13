@@ -12,11 +12,11 @@ import { Api } from "../../utils/api";
 import { setCookie } from "nookies";
 import { selectUserData, setUserData } from "../../redux/slices/user";
 import { useRouter } from "next/router";
+import { wrapper } from "../../redux/store";
 import { GetServerSideProps } from "next";
 
 function LoginPage() {
   const router = useRouter();
-  const userData = useAppSelector(selectUserData);
   const dispatch = useAppDispatch();
   const form = useForm({
     mode: "onChange",
@@ -29,7 +29,7 @@ function LoginPage() {
         path: "/",
       });
       dispatch(setUserData(data));
-      console.log(dto);
+      router.push("/");
     } catch (err) {
       console.warn("Register error", err);
       if (err.response) {
@@ -142,10 +142,25 @@ function LoginPage() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  return {
-    props: {},
-  };
-};
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (ctx) => {
+    const userData = store.getState().user;
+    if (userData.data) {
+      ctx.res?.writeHead(302, {
+        Location: "/404",
+      });
+      ctx.res?.end();
+    }
+    // if (userData) {
+    //   ctx.res?.writeHead(302, {
+    //     Location: "/",
+    //   });
+    //   ctx.res?.end();
+    // }
+    return {
+      props: {},
+    };
+  }
+);
 
 export default LoginPage;

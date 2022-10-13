@@ -1,41 +1,33 @@
-import { Fragment, useState } from "react";
+import { Fragment, ReactNode, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   BellIcon,
-  ClockIcon,
   CogIcon,
-  CreditCardIcon,
   DocumentReportIcon,
   HomeIcon,
   MenuAlt1Icon,
   QuestionMarkCircleIcon,
-  ScaleIcon,
-  ShieldCheckIcon,
   UserGroupIcon,
   XIcon,
   InboxIcon,
+  CollectionIcon,
 } from "@heroicons/react/outline";
-import {
-  CashIcon,
-  CheckCircleIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  OfficeBuildingIcon,
-  SearchIcon,
-} from "@heroicons/react/solid";
+import { ChevronDownIcon, SearchIcon } from "@heroicons/react/solid";
 import Link from "next/link";
-import axios from "axios";
 import { useAppSelector } from "../../redux/hooks";
 import { selectUserData } from "../../redux/slices/user";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 const navigation = [
   { name: "Главная", href: "/", icon: HomeIcon, current: true },
   { name: "Тикеты", href: "/tickets", icon: InboxIcon, current: false },
-  { name: "Балансы", href: "/balances", icon: ScaleIcon, current: false },
-  { name: "Карты", href: "/cards", icon: CreditCardIcon, current: false },
-  { name: "Клиенты", href: "/clients", icon: UserGroupIcon, current: false },
+  {
+    name: "Мои Заявки",
+    href: "/balances",
+    icon: CollectionIcon,
+    current: false,
+  },
+  { name: "Команды", href: "/clients", icon: UserGroupIcon, current: false },
   {
     name: "Отчёты",
     href: "/reports",
@@ -47,48 +39,27 @@ const secondaryNavigation = [
   { name: "Настройки", href: "/settings", icon: CogIcon },
   { name: "Помощь", href: "/help", icon: QuestionMarkCircleIcon },
 ];
-const cards = [
-  { name: "Account balance", href: "#", icon: ScaleIcon, amount: "$30,659.45" },
-  // More items...
-];
-const transactions = [
-  {
-    id: 1,
-    name: "Payment to Molly Sanders",
-    href: "#",
-    amount: "$20,000",
-    currency: "USD",
-    status: "success",
-    date: "July 11, 2020",
-    datetime: "2020-07-11",
-  },
-  // More transactions...
-];
 const statusStyles = {
   success: "bg-green-100 text-green-800",
   processing: "bg-yellow-100 text-yellow-800",
   failed: "bg-gray-100 text-gray-800",
 };
 
-function classNames(...classes) {
+function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function MainLayout({ children }) {
+interface MainLayoutProps {
+  children?: ReactNode;
+}
+
+export default function MainLayout({ children }: MainLayoutProps) {
   const router = useRouter();
   console.log(router.asPath);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const userData = useAppSelector(selectUserData);
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      */}
       <div className="min-h-full">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog

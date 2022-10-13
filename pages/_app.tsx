@@ -14,10 +14,9 @@ App.getInitialProps = wrapper.getInitialAppProps(
     async ({ ctx, Component }) => {
       try {
         const userData = await Api(ctx).user.getMe();
-
         store.dispatch(setUserData(userData));
       } catch (err) {
-        if (ctx.asPath === "/") {
+        if (ctx.asPath !== "/login") {
           ctx.res?.writeHead(302, {
             Location: "/login",
           });
